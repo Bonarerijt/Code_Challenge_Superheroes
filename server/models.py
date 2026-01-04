@@ -18,7 +18,16 @@ class Heroe(db.Model, SerializerMixin):
     super_name = db.Column(db.String)
 
     def __repr__(self):
-        return f'<Heroe {self.id} {self.name}: {self.super_name}>'
+        return f'<Heroe {self.id}, {self.name}: {self.super_name}>'
 
+class Power(db.Model, SerializerMixin):
+    __tablename__ = 'powers'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    description = db.Column(db.String)
+
+    def __repr__(self):
+        return f'<Power ({self.id}) {self.name}; {self.description}>'
 
     
