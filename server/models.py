@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
-# from sqlalchemy.orm import validates
+from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
 
@@ -43,6 +43,12 @@ class Power(db.Model, SerializerMixin):
     
     heroes = association_proxy('hero_powers', 'hero')
 
+    @validates("description")
+    def validate_description(self, key, value):
+        if not value or len(value) < 20:
+            raise ValueError("Description must be at least 20 characters long")
+        return value
+
     def __repr__(self):
         return f'<Power ({self.id}) {self.name}; {self.description}>'
 
@@ -61,6 +67,12 @@ class HeroPower(db.Model, SerializerMixin):
 
     hero = db.relationship('Hero', back_populates='hero_powers')
     power = db.relationship('Power', back_populates='hero_powers')
+
+    @validates("strength")
+    def validate_strength(self, key, value):
+        if value not in ["Strong", "Weak", "Average"]:
+            raise ValueError("Strength must be Strong, Weak, or Average")
+        return value
 
     def __repr__(self):
         return f'<HeroPower ({self.id}) {self.strength}>'
