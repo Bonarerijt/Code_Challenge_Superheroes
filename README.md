@@ -33,7 +33,7 @@ This repository includes a Postman collection for testing all required endpoints
 
 2. Open Postman
 
-3. lick Import
+3. Click Import
 
 4. Select Upload Files
 
@@ -99,7 +99,7 @@ The server runs on:
 
 http://localhost:5555
 
-## Support and contact details
+### Support and contact details
 github.com/Bonarerijt
 
 ### License
