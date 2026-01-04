@@ -13,7 +13,7 @@ db = SQLAlchemy(metadata=metadata)
 
 class Hero(db.Model, SerializerMixin):
     __tablename__ = 'heroes'
-    
+
     serialize_rules = ('-hero_powers.hero',)
 
     id = db.Column(db.Integer, primary_key=True)
@@ -22,7 +22,7 @@ class Hero(db.Model, SerializerMixin):
 
     hero_powers = db.relationship(
         'HeroPower', back_populates='hero', cascade='all, delete-orphan')
-    
+
     powers = association_proxy("hero_powers", "power")
 
     def __repr__(self):
@@ -40,7 +40,7 @@ class Power(db.Model, SerializerMixin):
 
     hero_powers = db.relationship(
         'HeroPower', back_populates='power', cascade='all, delete-orphan')
-    
+
     heroes = association_proxy('hero_powers', 'hero')
 
     @validates("description")
@@ -57,7 +57,6 @@ class HeroPower(db.Model, SerializerMixin):
     __tablename__ = 'hero_powers'
 
     serialize_rules = ('-hero.hero_powers', '-power.hero_powers',)
-
 
     id = db.Column(db.Integer, primary_key=True)
     strength = db.Column(db.String)
